@@ -1,0 +1,66 @@
+import sqlite3
+
+# Connect to the database
+conn = sqlite3.connect("user_database.db")
+cursor = conn.cursor()
+
+# Create the users table if it doesn't exist
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        username TEXT PRIMARY KEY,
+        password TEXT,
+        email TEXT
+    )
+""")
+conn.commit()
+
+class User:
+    def __init__(self, username, password, email):
+        self.username = username
+        self.password = password
+        self.email = email
+
+def validate_username(username):
+    # Add your username validation logic here
+    # Return True if valid, False otherwise
+    return True
+
+def validate_password(password):
+    # Add your password validation logic here
+    # Return True if valid, False otherwise
+    return True
+
+def validate_email(email):
+    # Add your email validation logic here
+    # Return True if valid, False otherwise
+    return True
+
+def register():
+    while True:
+        username = input("Enter a username: ")
+        if validate_username(username):
+            break
+        else:
+            print("Invalid username. Please try again.")
+    
+    while True:
+        password = input("Enter a password: ")
+        if validate_password(password):
+            break
+        else:
+            print("Invalid password. Please try again.")
+    
+    while True:
+        email = input("Enter an email: ")
+        if validate_email(email):
+            break
+        else:
+            print("Invalid email. Please try again.")
+    
+    user = User(username, password, email)
+    cursor.execute("INSERT INTO users VALUES (?, ?, ?)", (username, password, email))
+    conn.commit()
+    print("Registration successful!")
+
+# Usage example
+register()
